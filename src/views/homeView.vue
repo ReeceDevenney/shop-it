@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import cardSet from "../components/cardSet.vue"
 import { RouterLink } from 'vue-router'
+
+let test = localStorage.getItem("username")
 </script>
 
 <template>
