@@ -21,7 +21,7 @@ const setUsername = () => {
                 </RouterLink>
             </div>
             <div class="d-flex justify-center mb-2">
-                <input placeholder="UserName" class="w-75 rounded" ref="input" v-model="title">
+                <input placeholder="UserName" class="w-75 rounded" v-model="title">
             </div>
             <div class="d-flex justify-center">
                 <RouterLink to="/" class="ma-2 pa-2">
