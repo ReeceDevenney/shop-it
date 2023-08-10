@@ -3,7 +3,7 @@ import cardSet from "../components/cardSet.vue"
 import { RouterLink } from 'vue-router'
 
 
-let username = localStorage.getItem("username")
+let username: string | null = localStorage.getItem("username")
 </script>
 
 <template>
@@ -19,7 +19,7 @@ let username = localStorage.getItem("username")
                 <input type="text" id="searchbar" class="pl-2 w-100 rounded" placeholder="search" autofocus>
             </v-col>
             <v-col v-if="username" cols="1" class="d-flex justify-center">
-                <RouterLink to="/Loggin" class="ma-2 pa-2">
+                <RouterLink :to='`/dashboard/${username}`' class="ma-2 pa-2">
                     <v-btn color="black">{{ username }}</v-btn>
                 </RouterLink>
             </v-col>
