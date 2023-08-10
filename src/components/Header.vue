@@ -3,6 +3,9 @@ import { RouterLink } from 'vue-router'
 
 
 let username: string | null = localStorage.getItem("username")
+
+let items = [{ title: 'Dashboard' },
+{ title: 'Logout' }]
 </script>
 
 <template>
@@ -18,9 +21,21 @@ let username: string | null = localStorage.getItem("username")
                 <input type="text" id="searchbar" class="pl-2 w-100 rounded" placeholder="search" autofocus>
             </v-col>
             <v-col v-if="username" cols="2" class="d-flex justify-center">
-                <RouterLink :to='`/dashboard/${username}`' class="ma-2 pa-2">
-                    <v-btn color="black">{{ username }}</v-btn>
-                </RouterLink>
+                <v-btn class="ml-10">
+                    {{ username }}
+                    <v-menu activator="parent">
+                        <v-list>
+                            <v-list-item>
+                                <RouterLink :to="`/dashboard/${username}`">
+                                    <v-list-item-title>Dashboard</v-list-item-title>
+                                </RouterLink>
+                            </v-list-item>
+                            <v-list-item>
+                                <v-list-item-title>Logout</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </v-btn>
             </v-col>
             <v-col v-else cols="2" class="d-flex justify-center">
                 <RouterLink to="/Loggin" class="ma-2 pa-2">
