@@ -3,13 +3,7 @@ import cardSet from "../components/cardSet.vue"
 import { RouterLink } from 'vue-router'
 
 
-let test = localStorage.getItem("username")
-
-if (test) {
-    console.log("username exist")
-} else {
-    console.log("lol")
-}
+let username = localStorage.getItem("username")
 </script>
 
 <template>
@@ -24,9 +18,9 @@ if (test) {
             <v-col cols="8" class="d-flex align-center">
                 <input type="text" id="searchbar" class="pl-2 w-100 rounded" placeholder="search" autofocus>
             </v-col>
-            <v-col v-if="test" cols="1" class="d-flex justify-center">
+            <v-col v-if="username" cols="1" class="d-flex justify-center">
                 <RouterLink to="/Loggin" class="ma-2 pa-2">
-                    <v-btn color="black">{{ test }}</v-btn>
+                    <v-btn color="black">{{ username }}</v-btn>
                 </RouterLink>
             </v-col>
             <v-col v-else cols="1" class="d-flex justify-center">
