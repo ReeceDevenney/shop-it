@@ -1,8 +1,17 @@
 <script setup lang="ts">
+import { ref } from "vue"
 import Header from "../components/Header.vue"
 import ProductCard from "@/components/ProductCard.vue";
 
 const products = ["this is some sample text", "longet text", "testing testing", "one more test", "and another one", "asdfasdfasdf"]
+
+const productName = ref('')
+const imageUrl = ref('')
+const price = ref('')
+
+const printWords = () => {
+    console.log(productName.value, imageUrl.value, price.value)
+}
 </script>
 
 <template>
@@ -23,18 +32,18 @@ const products = ["this is some sample text", "longet text", "testing testing", 
             <v-container>
                 <v-row class="d-flex justify-center flex-column">
                     <v-col>
-                        <v-text-field label="Product Name" required></v-text-field>
+                        <v-text-field label="Product Name" v-model="productName" required></v-text-field>
                     </v-col>
 
                     <v-col>
-                        <v-text-field label="Image URL" required></v-text-field>
+                        <v-text-field label="Image URL" v-model="imageUrl" required></v-text-field>
                     </v-col>
 
                     <v-col>
-                        <v-text-field label="Price" required></v-text-field>
+                        <v-text-field label="Price" v-model="price" required></v-text-field>
                     </v-col>
                 </v-row>
-                <v-btn class="bg-green">Add Product</v-btn>
+                <v-btn class="bg-green" @click="printWords">Add Product</v-btn>
             </v-container>
         </v-form>
     </v-main>
