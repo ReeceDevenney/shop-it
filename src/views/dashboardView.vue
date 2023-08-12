@@ -5,13 +5,21 @@ import ProductCard from "@/components/ProductCard.vue";
 
 const products = ["this is some sample text", "longet text", "testing testing", "one more test", "and another one", "asdfasdfasdf"]
 
-const productName = ref('')
-const imageUrl = ref('')
-const price = ref('')
+let productName = ref('')
+let imageUrl = ref('')
+let price = ref<number | null>()
 
 const printWords = () => {
     console.log(productName.value, imageUrl.value, price.value)
+    productName.value = ''
+    imageUrl.value = ''
+    price.value = null
 }
+
+const priceRules = [
+    (v: string) => !Number.isNaN(parseInt(v)) || 'this feild must be a numbered price',
+]
+
 </script>
 
 <template>
@@ -40,7 +48,7 @@ const printWords = () => {
                     </v-col>
 
                     <v-col>
-                        <v-text-field label="Price" v-model="price" required></v-text-field>
+                        <v-text-field label="Price" v-model="price" :rules="priceRules" required></v-text-field>
                     </v-col>
                 </v-row>
                 <v-btn class="bg-green" @click="printWords">Add Product</v-btn>
