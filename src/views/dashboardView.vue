@@ -27,8 +27,8 @@ const priceRules = [
     <v-main>
         <h2 class="d-flex justify-center ma-2">Your Products</h2>
         <v-row class="d-flex justify-center ma-2">
-            <v-col v-for="product in products" cols="2">
-                <ProductCard :product="product" />
+            <v-col v-for="(product, index) in products" cols="2">
+                <ProductCard :product="product" :index="index" />
                 <div class="d-flex justify-space-around">
                     <v-btn class="ma-1 bg-yellow-lighten-2">edit</v-btn>
                     <v-btn class="ma-1 bg-red-darken-4">delete</v-btn>
