@@ -6,6 +6,10 @@ let username: string | null = localStorage.getItem("username")
 
 let items = [{ title: 'Dashboard' },
 { title: 'Logout' }]
+
+const loggout = () => {
+    localStorage.removeItem("username");
+}
 </script>
 
 <template>
@@ -39,7 +43,7 @@ let items = [{ title: 'Dashboard' },
             </v-col>
             <v-col v-else cols="2" class="d-flex justify-center">
                 <RouterLink to="/Loggin" class="ma-2 pa-2">
-                    <v-btn color="black">Loggin</v-btn>
+                    <v-btn color="black">Login</v-btn>
                 </RouterLink>
             </v-col>
             <v-col cols="" class="d-flex justify-center">

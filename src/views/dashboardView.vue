@@ -17,7 +17,7 @@ const printWords = () => {
 }
 
 const priceRules = [
-    (v: string) => !Number.isNaN(parseInt(v)) || 'this feild must be a numbered price',
+    (v: string) => !Number.isNaN(parseInt(v)) || 'this field must be a numbered price',
 ]
 
 </script>
