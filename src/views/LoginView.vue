@@ -25,7 +25,7 @@ const setUsername = () => {
             </div>
             <div class="d-flex justify-center">
                 <RouterLink to="/" class="ma-2 pa-2">
-                    <v-btn class="ma-auto" color="grey" @click="setUsername()">loggin</v-btn>
+                    <v-btn class="ma-auto" color="grey" @click="setUsername()">login</v-btn>
                 </RouterLink>
             </div>
         </div>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { ref } from 'vue'
 
 
 let username: string | null = localStorage.getItem("username")
@@ -7,8 +8,18 @@ let username: string | null = localStorage.getItem("username")
 let items = [{ title: 'Dashboard' },
 { title: 'Logout' }]
 
-const loggout = () => {
-    localStorage.removeItem("username");
+const componentKey = ref(0);
+
+const forceRerender = () => {
+    componentKey.value += 1;
+    console.log(componentKey.value)
+};
+
+const logout = (forceRerender: Function) => {
+    localStorage.removeItem("username")
+    console.log(localStorage.getItem("username"))
+    username = localStorage.getItem("username")
+    forceRerender()
 }
 </script>
 
@@ -24,7 +35,7 @@ const loggout = () => {
             <v-col cols="6" class="d-flex align-center ma-8">
                 <input type="text" id="searchbar" class="pl-2 w-100 rounded" placeholder="search" autofocus>
             </v-col>
-            <v-col v-if="username" cols="2" class="d-flex justify-center">
+            <v-col v-if="username" cols="2" class="d-flex justify-center" :key="componentKey">
                 <v-btn class="ml-10">
                     {{ username }}
                     <v-menu activator="parent">
@@ -34,7 +45,7 @@ const loggout = () => {
                                     <v-list-item-title>Dashboard</v-list-item-title>
                                 </RouterLink>
                             </v-list-item>
-                            <v-list-item>
+                            <v-list-item @click="logout(forceRerender)">
                                 <v-list-item-title>Logout</v-list-item-title>
                             </v-list-item>
                         </v-list>
@@ -42,7 +53,7 @@ const loggout = () => {
                 </v-btn>
             </v-col>
             <v-col v-else cols="2" class="d-flex justify-center">
-                <RouterLink to="/Loggin" class="ma-2 pa-2">
+                <RouterLink to="/Login" class="ma-2 pa-2">
                     <v-btn color="black">Login</v-btn>
                 </RouterLink>
             </v-col>
