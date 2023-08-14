@@ -58,9 +58,11 @@ const logout = (forceRerender: Function) => {
                 </RouterLink>
             </v-col>
             <v-col cols="" class="d-flex justify-center">
-                <v-sheet class="ma-2 pa-2">
-                    <v-btn color="black">Cart</v-btn>
-                </v-sheet>
+                <RouterLink to="/cart" class="ma-2 pa-2 rounded-shaped">
+                    <v-sheet class="ma-2 pa-2">
+                        <v-btn color="black">Cart</v-btn>
+                    </v-sheet>
+                </RouterLink>
             </v-col>
         </v-row>
     </v-app-bar>
