@@ -12,12 +12,10 @@ const componentKey = ref(0);
 
 const forceRerender = () => {
     componentKey.value += 1;
-    console.log(componentKey.value)
 };
 
 const logout = (forceRerender: Function) => {
     localStorage.removeItem("username")
-    console.log(localStorage.getItem("username"))
     username = localStorage.getItem("username")
     forceRerender()
 }
@@ -45,9 +43,11 @@ const logout = (forceRerender: Function) => {
                                     <v-list-item-title>Dashboard</v-list-item-title>
                                 </RouterLink>
                             </v-list-item>
-                            <v-list-item @click="logout(forceRerender)">
-                                <v-list-item-title>Logout</v-list-item-title>
-                            </v-list-item>
+                            <RouterLink to="/" class="ma-2 pa-2 rounded-shaped">
+                                <v-list-item @click="logout(forceRerender)">
+                                    <v-list-item-title>Logout</v-list-item-title>
+                                </v-list-item>
+                            </RouterLink>
                         </v-list>
                     </v-menu>
                 </v-btn>
