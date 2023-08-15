@@ -16,7 +16,7 @@ const getUsers = async () => {
 
 }
 
-onMounted(() => getUsers())
+// onMounted(() => getUsers())
 </script>
 
 <template>

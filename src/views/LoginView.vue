@@ -1,14 +1,27 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
+import UserForm from '../components/UserForm.vue'
 
-const title = ref('')
+const username = ref('')
+const Password = ref('')
 
-const setUsername = () => {
-    localStorage.setItem("username", title.value)
+const login = () => {
+    localStorage.setItem("username", username.value)
     console.log(localStorage.getItem("username"))
 }
 
+const signUp = () => {
+    console.log("sign-up")
+}
+
+let flipSwitch = ref(true)
+const setLogin = () => {
+    flipSwitch.value = true
+}
+const setSignUp = () => {
+    flipSwitch.value = false
+}
 </script>
 
 <template>
@@ -20,14 +33,12 @@ const setUsername = () => {
                     Shop-It!
                 </RouterLink>
             </div>
-            <div class="d-flex justify-center mb-2">
-                <input placeholder="UserName" class="w-75 rounded" v-model="title">
+            <div class="d-flex justify-space-around">
+                <v-btn variant="text" @click="setLogin">Login</v-btn>
+                <v-btn variant="text" @click="setSignUp">Sign-up</v-btn>
             </div>
-            <div class="d-flex justify-center">
-                <RouterLink to="/" class="ma-2 pa-2">
-                    <v-btn class="ma-auto" color="grey" @click="setUsername()">login</v-btn>
-                </RouterLink>
-            </div>
+            <UserForm v-if="flipSwitch" title="Login" :formFunction="login"></UserForm>
+            <UserForm v-else title="Sign-Up" :formFunction="signUp"></UserForm>
         </div>
     </div>
 </template>
