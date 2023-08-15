@@ -2,29 +2,32 @@
 import ProductCard from "../components/ProductCard.vue"
 import Header from "../components/Header.vue"
 import db from "../firebaseInit"
-import { doc, getDoc } from 'firebase/firestore'
-import { onMounted } from 'vue';
+import { doc, getDoc, getDocs, collection } from 'firebase/firestore'
+import { onMounted, ref } from 'vue';
 
-const test = ["this is some sample text", "longet text", "testing testing", "one more test", "and another one", "asdfasdfasdf", "asdfasdfafd"]
-const getUsers = async () => {
-    const docSnap = await getDoc(doc(db, 'Users', '6fwb4ASd2HmmvZnuSh8X'))
-    if (docSnap.exists()) {
-        console.log(docSnap.data())
-    } else {
-        console.log("whoops")
-    }
-
-}
-
-// onMounted(() => getUsers())
+let products: any = ref([])
+onMounted(async () => {
+    const querySnapshot = await getDocs(collection(db, "Products"));
+    let productsTemp = []
+    querySnapshot.forEach((doc) => {
+        const product = {
+            id: doc.id,
+            title: doc.data().title,
+            price: doc.data().price
+        }
+        productsTemp.push(product)
+    })
+    products.value = productsTemp
+})
+console.log(products, products.value, "test")
 </script>
 
 <template>
     <Header />
     <v-main>
         <v-row class="d-flex justify-center ma-2">
-            <v-col v-for="(num, index) in test" cols="2">
-                <ProductCard :product="num" :index="index" />
+            <v-col v-for="product in products" cols="2">
+                <ProductCard :product="product?.title" :index="product?.id" />
             </v-col>
         </v-row>
     </v-main>

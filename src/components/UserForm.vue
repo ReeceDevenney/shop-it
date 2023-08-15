@@ -5,7 +5,8 @@ import { ref } from 'vue'
 defineProps(["title", "formFunction"])
 
 const username = ref('')
-const Password = ref('')
+const password = ref('')
+const email = ref('')
 
 const setUsername = () => {
     localStorage.setItem("username", username.value)
@@ -19,7 +20,10 @@ const setUsername = () => {
         <input placeholder="UserName" class="w-75 rounded" v-model="username">
     </div>
     <div class="d-flex justify-center mb-2">
-        <input placeholder="Password" class="w-75 rounded" v-model="Password">
+        <input placeholder="Email" class="w-75 rounded" v-model="email">
+    </div>
+    <div class="d-flex justify-center mb-2">
+        <input placeholder="Password" class="w-75 rounded" v-model="password">
     </div>
     <div class="d-flex justify-center">
         <RouterLink to="/" class="ma-2 pa-2">

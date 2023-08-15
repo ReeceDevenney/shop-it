@@ -2,18 +2,21 @@
 import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
 import UserForm from '../components/UserForm.vue'
+import firebase from 'firebase/firestore'
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const username = ref('')
-const Password = ref('')
 
 const login = () => {
     localStorage.setItem("username", username.value)
     console.log(localStorage.getItem("username"))
 }
 
+
 const signUp = () => {
-    console.log("sign-up")
+    console.log("signup")
 }
+
 
 let flipSwitch = ref(true)
 const setLogin = () => {
