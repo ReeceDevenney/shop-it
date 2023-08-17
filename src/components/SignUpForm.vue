@@ -1,12 +1,41 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
-
-defineProps(["title", "formFunction"])
-
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 const username = ref('')
 const password = ref('')
 const email = ref('')
+
+const auth = getAuth();
+const test = async () => {
+    await createUserWithEmailAndPassword(auth, email.value, password.value)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+        });
+    if (auth.currentUser) {
+        updateProfile(auth.currentUser, {
+            displayName: username.value
+        }).then(() => {
+            // Profile updated!
+            // ...
+        }).catch((error) => {
+            // An error occurred
+            // ...
+        });
+    }
+
+}
+
+const user = auth.currentUser;
+console.log(user, "hi")
+
 
 
 </script>
@@ -23,7 +52,7 @@ const email = ref('')
     </div>
     <div class="d-flex justify-center">
         <RouterLink to="/" class="ma-2 pa-2">
-            <v-btn class="ma-auto" color="grey" @click="formFunction(username)">Sign Up</v-btn>
+            <v-btn class="ma-auto" color="grey" @click="test()">Sign Up</v-btn>
         </RouterLink>
     </div>
 </template>
