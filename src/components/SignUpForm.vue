@@ -32,12 +32,6 @@ const test = async () => {
     }
 
 }
-
-const user = auth.currentUser;
-console.log(user, "hi")
-
-
-
 </script>
 
 <template>

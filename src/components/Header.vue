@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
+import { getAuth, signOut } from "firebase/auth";
 
-
-let username: string | null = localStorage.getItem("username")
+const auth = getAuth();
+const user = auth.currentUser;
 
 let items = [{ title: 'Dashboard' },
 { title: 'Logout' }]
@@ -15,9 +16,11 @@ const forceRerender = () => {
 };
 
 const logout = (forceRerender: Function) => {
-    localStorage.removeItem("username")
-    username = localStorage.getItem("username")
-    forceRerender()
+    signOut(auth).then(() => {
+        // Sign-out successful.
+    }).catch((error) => {
+        // An error happened.
+    });
 }
 </script>
 
@@ -33,13 +36,13 @@ const logout = (forceRerender: Function) => {
             <v-col cols="6" class="d-flex align-center ma-8">
                 <input type="text" id="searchbar" class="pl-2 w-100 rounded" placeholder="search" autofocus>
             </v-col>
-            <v-col v-if="username" cols="2" class="d-flex justify-center" :key="componentKey">
+            <v-col v-if="user" cols="2" class="d-flex justify-center" :key="componentKey">
                 <v-btn class="ml-10">
-                    {{ username }}
+                    {{ user?.displayName }}
                     <v-menu activator="parent">
                         <v-list>
                             <v-list-item>
-                                <RouterLink :to="`/dashboard/${username}`">
+                                <RouterLink :to="`/dashboard/${user?.displayName}`">
                                     <v-list-item-title>Dashboard</v-list-item-title>
                                 </RouterLink>
                             </v-list-item>
