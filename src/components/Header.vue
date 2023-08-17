@@ -4,24 +4,22 @@ import { ref } from 'vue'
 import { getAuth, signOut } from "firebase/auth";
 
 const auth = getAuth();
-const user = auth.currentUser;
+let user = ref(auth.currentUser);
 
 let items = [{ title: 'Dashboard' },
 { title: 'Logout' }]
 
-const componentKey = ref(0);
-
-const forceRerender = () => {
-    componentKey.value += 1;
-};
-
-const logout = (forceRerender: Function) => {
-    signOut(auth).then(() => {
-        // Sign-out successful.
+const logout = async () => {
+    await signOut(auth).then(() => {
+        user.value = auth.currentUser
+        console.log(user, "inner")
     }).catch((error) => {
         // An error happened.
     });
+    console.log(user, "outter")
+
 }
+
 </script>
 
 <template>
@@ -36,7 +34,7 @@ const logout = (forceRerender: Function) => {
             <v-col cols="6" class="d-flex align-center ma-8">
                 <input type="text" id="searchbar" class="pl-2 w-100 rounded" placeholder="search" autofocus>
             </v-col>
-            <v-col v-if="user" cols="2" class="d-flex justify-center" :key="componentKey">
+            <v-col v-if="user" cols="2" class="d-flex justify-center">
                 <v-btn class="ml-10">
                     {{ user?.displayName }}
                     <v-menu activator="parent">
@@ -47,7 +45,7 @@ const logout = (forceRerender: Function) => {
                                 </RouterLink>
                             </v-list-item>
                             <RouterLink to="/" class="ma-2 pa-2 rounded-shaped">
-                                <v-list-item @click="logout(forceRerender)">
+                                <v-list-item @click="logout()">
                                     <v-list-item-title>Logout</v-list-item-title>
                                 </v-list-item>
                             </RouterLink>
