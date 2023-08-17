@@ -1,10 +1,23 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import { ref } from 'vue'
-import { getAuth, signOut } from "firebase/auth";
+import { ref, onBeforeMount } from 'vue'
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 
 const auth = getAuth();
-let user = ref(auth.currentUser);
+let user: any = ref(auth.currentUser);
+onBeforeMount(() => onAuthStateChanged(auth, (users) => {
+    if (users) {
+        user.value = users
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        const uid = users.uid;
+        // ...
+    } else {
+        // User is signed out
+        // ...
+    }
+}))
+
 
 let items = [{ title: 'Dashboard' },
 { title: 'Logout' }]

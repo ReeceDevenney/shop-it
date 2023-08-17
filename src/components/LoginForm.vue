@@ -6,12 +6,16 @@ const password = ref('')
 const email = ref('')
 
 const auth = getAuth();
-const login = () => {
+const login = (event: Event) => {
+    event?.preventDefault
     signInWithEmailAndPassword(auth, email.value, password.value)
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            console.log(user)
+            if (user) {
+                console.log(user, "user test")
+                window.location.href = '/'
+            }
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -34,8 +38,6 @@ const login = () => {
         <input placeholder="Password" class="w-75 rounded" v-model="password">
     </div>
     <div class="d-flex justify-center">
-        <RouterLink to="/" class="ma-2 pa-2">
-            <v-btn class="ma-auto" color="grey" @click="login">Login</v-btn>
-        </RouterLink>
+        <v-btn class="ma-auto" color="grey" @click="login">Login</v-btn>
     </div>
 </template>
