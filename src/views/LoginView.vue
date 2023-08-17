@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
-import UserForm from '../components/UserForm.vue'
-import firebase from 'firebase/firestore'
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import SignUpForm from '../components/SignUpForm.vue'
+import LoginForm from '../components/LoginForm.vue'
 
-const username = ref('')
 
-const login = () => {
-    localStorage.setItem("username", username.value)
+const login = (username: string) => {
+    localStorage.setItem("username", username)
     console.log(localStorage.getItem("username"))
 }
 
@@ -40,8 +38,8 @@ const setSignUp = () => {
                 <v-btn variant="text" @click="setLogin">Login</v-btn>
                 <v-btn variant="text" @click="setSignUp">Sign-up</v-btn>
             </div>
-            <UserForm v-if="flipSwitch" title="Login" :formFunction="login"></UserForm>
-            <UserForm v-else title="Sign-Up" :formFunction="signUp"></UserForm>
+            <LoginForm v-if="flipSwitch"></LoginForm>
+            <SignUpForm v-else></SignUpForm>
         </div>
     </div>
 </template>

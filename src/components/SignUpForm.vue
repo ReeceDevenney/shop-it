@@ -8,10 +8,6 @@ const username = ref('')
 const password = ref('')
 const email = ref('')
 
-const setUsername = () => {
-    localStorage.setItem("username", username.value)
-    console.log(localStorage.getItem("username"))
-}
 
 </script>
 
@@ -27,7 +23,7 @@ const setUsername = () => {
     </div>
     <div class="d-flex justify-center">
         <RouterLink to="/" class="ma-2 pa-2">
-            <v-btn class="ma-auto" color="grey" @click="formFunction()">{{ title }}</v-btn>
+            <v-btn class="ma-auto" color="grey" @click="formFunction(username)">Sign Up</v-btn>
         </RouterLink>
     </div>
 </template>

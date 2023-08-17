@@ -8,18 +8,17 @@ import { onMounted, ref } from 'vue';
 let products: any = ref([])
 onMounted(async () => {
     const querySnapshot = await getDocs(collection(db, "Products"));
-    let productsTemp = []
+    let productsTemp: any = []
     querySnapshot.forEach((doc) => {
         const product = {
             id: doc.id,
             title: doc.data().title,
-            price: doc.data().price
+            price: doc.data().price,
         }
         productsTemp.push(product)
     })
     products.value = productsTemp
 })
-console.log(products, products.value, "test")
 </script>
 
 <template>
@@ -27,7 +26,7 @@ console.log(products, products.value, "test")
     <v-main>
         <v-row class="d-flex justify-center ma-2">
             <v-col v-for="product in products" cols="2">
-                <ProductCard :product="product?.title" :index="product?.id" />
+                <ProductCard :product="product?.title" :index="product?.id" :price="product?.price" />
             </v-col>
         </v-row>
     </v-main>
