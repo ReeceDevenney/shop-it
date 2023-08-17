@@ -12,7 +12,6 @@ const test = async () => {
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            // ...
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -23,8 +22,7 @@ const test = async () => {
         updateProfile(auth.currentUser, {
             displayName: username.value
         }).then(() => {
-            // Profile updated!
-            // ...
+            window.location.href = '/'
         }).catch((error) => {
             // An error occurred
             // ...
@@ -45,8 +43,6 @@ const test = async () => {
         <input placeholder="Password" class="w-75 rounded" v-model="password">
     </div>
     <div class="d-flex justify-center">
-        <RouterLink to="/" class="ma-2 pa-2">
-            <v-btn class="ma-auto" color="grey" @click="test()">Sign Up</v-btn>
-        </RouterLink>
+        <v-btn class="ma-auto" color="grey" @click="test()">Sign Up</v-btn>
     </div>
 </template>

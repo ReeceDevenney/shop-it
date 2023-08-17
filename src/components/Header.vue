@@ -4,7 +4,8 @@ import { ref, onBeforeMount } from 'vue'
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 
 const auth = getAuth();
-let user: any = ref(auth.currentUser);
+let user = ref(auth.currentUser);
+
 onBeforeMount(() => onAuthStateChanged(auth, (users) => {
     if (users) {
         user.value = users
