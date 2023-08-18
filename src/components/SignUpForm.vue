@@ -7,7 +7,7 @@ const password = ref('')
 const email = ref('')
 
 const auth = getAuth();
-const test = async () => {
+const signUp = async () => {
     await createUserWithEmailAndPassword(auth, email.value, password.value)
         .then((userCredential) => {
             // Signed in 
@@ -43,6 +43,6 @@ const test = async () => {
         <input placeholder="Password" class="w-75 rounded" v-model="password">
     </div>
     <div class="d-flex justify-center">
-        <v-btn class="ma-auto" color="grey" @click="test()">Sign Up</v-btn>
+        <v-btn class="ma-auto" color="grey" @click="signUp()">Sign Up</v-btn>
     </div>
 </template>
