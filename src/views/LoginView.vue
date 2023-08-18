@@ -27,7 +27,7 @@ const setSignUp = () => {
 
 <template>
     <div class="d-flex justify-center mt-15">
-        <div class="w-50 bg-grey-lighten-3 pa-10">
+        <div class="w-50 bg-grey-lighten-4 pa-10">
             <div class="d-flex justify-center">
                 <RouterLink to="/" class="pa-2 mb-2 rounded-shaped w-75 d-flex justify-center"
                     style="text-decoration: none; color: inherit; background-color: green;">
