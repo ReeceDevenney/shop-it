@@ -54,7 +54,7 @@ const logout = async () => {
                     <v-menu activator="parent">
                         <v-list>
                             <v-list-item>
-                                <RouterLink :to="`/dashboard/${user?.displayName}`">
+                                <RouterLink :to="`/dashboard/${user?.uid}`">
                                     <v-list-item-title>Dashboard</v-list-item-title>
                                 </RouterLink>
                             </v-list-item>

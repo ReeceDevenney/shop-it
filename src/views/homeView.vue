@@ -3,10 +3,10 @@ import ProductCard from "../components/ProductCard.vue"
 import Header from "../components/Header.vue"
 import db from "../firebaseInit"
 import { doc, getDoc, getDocs, collection } from 'firebase/firestore'
-import { onMounted, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 
 let products: any = ref([])
-onMounted(async () => {
+onBeforeMount(async () => {
     const querySnapshot = await getDocs(collection(db, "Products"));
     let productsTemp: any = []
     querySnapshot.forEach((doc) => {
