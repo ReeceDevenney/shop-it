@@ -34,9 +34,9 @@ onBeforeMount(() => getProduct(product))
                 </VImg>
             </v-col>
             <v-col cols="5" class="ma-10">
-                <h2 class="text-h2 mb-5">{{ product.productName }}</h2>
-                <p class="text-h5 mb-5">{{ product.description }}</p>
-                <p class="text-h5 mb-5">${{ product.price }}</p>
+                <h2 class="mb-5">{{ product.productName }}</h2>
+                <p class="mb-5">{{ product.description }}</p>
+                <p class="mb-5">${{ product.price }}</p>
                 <v-btn>add to cart</v-btn>
             </v-col>
         </v-row>
