@@ -19,9 +19,6 @@ const getProduct = async (product: any) => {
 }
 onBeforeMount(() => getProduct(product))
 
-const test = () => {
-    console.log(product.value)
-}
 
 </script>
 
@@ -36,11 +33,11 @@ const test = () => {
                 <VImg :src=product.imageUrl>
                 </VImg>
             </v-col>
-            <v-col cols="3" class="ma-10">
-                <h2>{{ product.productName }}</h2>
-                <p>{{ product.description }}</p>
-                <p>{{ product.price }}</p>
-                <v-btn @click="test()">add to cart</v-btn>
+            <v-col cols="5" class="ma-10">
+                <h2 class="text-h2 mb-5">{{ product.productName }}</h2>
+                <p class="text-h5 mb-5">{{ product.description }}</p>
+                <p class="text-h5 mb-5">${{ product.price }}</p>
+                <v-btn>add to cart</v-btn>
             </v-col>
         </v-row>
     </v-main>
