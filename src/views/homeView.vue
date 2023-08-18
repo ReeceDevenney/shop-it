@@ -12,7 +12,7 @@ onBeforeMount(async () => {
     querySnapshot.forEach((doc) => {
         const product = {
             id: doc.id,
-            title: doc.data().title,
+            productName: doc.data().productName,
             price: doc.data().price,
         }
         productsTemp.push(product)
@@ -26,7 +26,7 @@ onBeforeMount(async () => {
     <v-main>
         <v-row class="d-flex justify-center ma-2">
             <v-col v-for="product in products" cols="2">
-                <ProductCard :product="product?.title" :index="product?.id" :price="product?.price" />
+                <ProductCard :product="product?.productName" :index="product?.id" :price="product?.price" />
             </v-col>
         </v-row>
     </v-main>
