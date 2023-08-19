@@ -7,9 +7,11 @@ import { ref, onBeforeMount } from "vue"
 const url = window.location.href
 const split = url.split("/")
 const productId = split[split.length - 1]
+
 let loading = ref(true)
+
 const product = ref()
-const docRef = doc(db, "Products", "htJ4LeeEnwXsmrj1fAIu");
+const docRef = doc(db, "Products", productId);
 const getProduct = async (product: any) => {
     let docSnap = await getDoc(docRef);
     product.value = docSnap.data()
@@ -19,13 +21,22 @@ const getProduct = async (product: any) => {
 }
 onBeforeMount(() => getProduct(product))
 
+const addToCart = () => {
+    if (localStorage.getItem("cart") === null) {
+        localStorage.setItem("cart", JSON.stringify([product.value]))
+    } else {
+        let holder = JSON.parse(localStorage.getItem("cart"))
+        holder.push(product.value)
+        localStorage.setItem("cart", JSON.stringify(holder))
+    }
+}
 
 </script>
 
 <template>
     <Header />
     <v-main v-if="loading">
-        <div>test</div>
+        <div>loading...</div>
     </v-main>
     <v-main v-else>
         <v-row>
@@ -37,7 +48,7 @@ onBeforeMount(() => getProduct(product))
                 <h2 class="mb-5">{{ product.productName }}</h2>
                 <p class="mb-5">{{ product.description }}</p>
                 <p class="mb-5">${{ product.price }}</p>
-                <v-btn>add to cart</v-btn>
+                <v-btn @click="addToCart">add to cart</v-btn>
             </v-col>
         </v-row>
     </v-main>

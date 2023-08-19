@@ -5,6 +5,7 @@ import ProductCard from "@/components/ProductCard.vue";
 import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import db from '../firebaseInit'
+
 // gets userId from the URL
 const url = window.location.href
 const split = url.split("/")
