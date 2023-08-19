@@ -3,7 +3,7 @@ import Header from "../components/Header.vue"
 import CheckoutCard from "../components/CheckoutCard.vue"
 import { ref } from "vue"
 let localCart = localStorage.getItem("cart")
-let cart: any = ref([])
+const cart: any = ref([])
 console.log(cart)
 if (localCart) {
     cart.value = JSON.parse(localCart)
