@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps(["imageUrl", "productName", "price"])
+defineProps(["imageUrl", "productName", "price", "keys"])
 </script>
 
 <template>
@@ -12,6 +12,8 @@ defineProps(["imageUrl", "productName", "price"])
         </v-col>
         <v-col cols="2">
             <p>${{ price }}</p>
+            <p @click="$emit('remove')">remove</p>
+            <div>{{ keys }}</div>
         </v-col>
         <v-divider></v-divider>
     </v-row>
