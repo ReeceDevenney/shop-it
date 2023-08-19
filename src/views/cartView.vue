@@ -4,18 +4,15 @@ import CheckoutCard from "../components/CheckoutCard.vue"
 import { ref } from "vue"
 let localCart = localStorage.getItem("cart")
 const cart: any = ref([])
-console.log(cart)
 if (localCart) {
     cart.value = JSON.parse(localCart)
 }
-console.log(cart.value, "outter")
 let total = 0
-for (let i = 0; i < cart.length; i++) {
-    total += parseFloat(cart[i].price)
+for (let i = 0; i < cart.value.length; i++) {
+    total += parseFloat(cart.value[i].price)
 }
 
 const removeFromCart = (index: number) => {
-    console.log(cart.value)
     cart.value.splice(index, 1)
     localStorage.setItem("cart", JSON.stringify(cart.value))
 }
