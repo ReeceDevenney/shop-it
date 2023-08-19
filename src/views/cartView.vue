@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import Header from "../components/Header.vue"
 import CheckoutCard from "../components/CheckoutCard.vue"
-let test = localStorage.getItem("cart")
-let cart = []
-if (test) {
-    cart = JSON.parse(test)
+
+let localCart = localStorage.getItem("cart")
+let cart: any = []
+if (localCart) {
+    cart = JSON.parse(localCart)
+}
+
+let total = 0
+for (let i = 0; i < cart.length; i++) {
+    total += parseFloat(cart[i].price)
+    console.log(total, cart)
 }
 
 </script>
@@ -12,7 +19,19 @@ if (test) {
 <template>
     <Header />
     <v-main>
-        <CheckoutCard v-for="item in cart" :imageUrl="item.imageUrl" :productName="item.productName" :price="item.price" />
         <div v-if="!cart[0]" class="d-flex justify-center ma-4">no items in cart</div>
+        <div v-else>
+            <CheckoutCard v-for="item in cart" :imageUrl="item.imageUrl" :productName="item.productName"
+                :price="item.price" />
+            <v-row class="d-flex justify-space-between my-2 mx-16 pa-2">
+                <v-col cols="9">
+                    <v-img></v-img>
+                </v-col>
+                <v-col cols="2">
+                    <p>total: ${{ total }}</p>
+                    <v-btn class="bg-green-darken-1">checkout</v-btn>
+                </v-col>
+            </v-row>
+        </div>
     </v-main>
 </template>
