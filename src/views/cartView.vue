@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import Header from "../components/Header.vue"
 import CheckoutCard from "../components/CheckoutCard.vue"
+import { RouterLink } from 'vue-router'
 import { ref } from "vue"
+
 let localCart = localStorage.getItem("cart")
 const cart: any = ref([])
 if (localCart) {
@@ -31,7 +33,9 @@ const removeFromCart = (index: number) => {
                 </v-col>
                 <v-col cols="2">
                     <p>total: ${{ total }}</p>
-                    <v-btn class="bg-green-darken-1">checkout</v-btn>
+                    <RouterLink to="/checkout">
+                        <v-btn class="bg-green-darken-1">checkout</v-btn>
+                    </RouterLink>
                 </v-col>
             </v-row>
         </div>
