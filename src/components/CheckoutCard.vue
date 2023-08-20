@@ -12,9 +12,14 @@ defineProps(["imageUrl", "productName", "price", "keys"])
         </v-col>
         <v-col cols="2">
             <p>${{ price }}</p>
-            <p @click="$emit('remove')">remove</p>
-            <div>{{ keys }}</div>
+            <p @click="$emit('remove')" class="row-pointer">remove</p>
         </v-col>
         <v-divider></v-divider>
     </v-row>
 </template>
+
+<style scoped>
+.row-pointer {
+    cursor: pointer;
+}
+</style>
