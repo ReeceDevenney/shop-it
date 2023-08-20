@@ -37,7 +37,9 @@ const btnPress = async () => {
             }
         }
     }
-
+    if (orderSucess.value) {
+        localStorage.removeItem("cart");
+    }
 }
 </script>
 
