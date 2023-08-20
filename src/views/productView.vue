@@ -15,6 +15,7 @@ const docRef = doc(db, "Products", productId);
 const getProduct = async (product: any) => {
     let docSnap = await getDoc(docRef);
     product.value = docSnap.data()
+    product.value.productId = productId
     if (product.value) {
         loading.value = false
     }
