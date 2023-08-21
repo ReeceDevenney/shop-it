@@ -1,36 +1,55 @@
 <script setup lang="ts">
 import Header from "../components/Header.vue"
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { collection, addDoc } from "firebase/firestore";
 import db from "../firebaseInit"
 import { RouterLink } from 'vue-router'
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+
+const auth = getAuth()
+let userId: string = ""
+onBeforeMount(() => onAuthStateChanged(auth, (users) => {
+    if (!users?.uid) {
+        window.location.href = '/'
+    } else {
+        userId = users?.uid
+    }
+}))
 
 const city = ref('')
 const state = ref('')
 const address = ref('')
 const zip = ref('')
 
-let cart = localStorage.getItem("cart")
-if (cart) {
-    cart = JSON.parse(cart)
+interface cartShape {
+    productId: string,
+    postedBy: string,
+    price: string,
+    imageUrl: string,
+    productName: string,
 }
+const cartStorage = localStorage.getItem("cart")
+let cart: Array<cartShape> = []
+if (cartStorage != null) {
+    cart = JSON.parse(cartStorage)
+}
+
 
 let orderSucess = ref(false)
 const btnPress = async () => {
     if (cart) {
         for (let i = 0; i < cart?.length; i++) {
-            let cartitem = cart[i]
             const docRef = await addDoc(collection(db, "Orders"), {
                 address: address.value,
                 state: state.value,
                 city: city.value,
                 zip: zip.value,
-                productId: cartitem.productId,
-                sellerId: cartitem.postedBy,
-                buyerId: "3EMMY37Dkua5UKDJnCXueFF4Lek2",
-                price: cartitem.price,
-                imageUrl: cartitem.imageUrl,
-                productName: cartitem.productName,
+                productId: cart[i].productId,
+                sellerId: cart[i].postedBy,
+                buyerId: userId,
+                price: cart[i].price,
+                imageUrl: cart[i].imageUrl,
+                productName: cart[i].productName,
             });
             if (docRef) {
                 orderSucess.value = true
