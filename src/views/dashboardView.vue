@@ -12,12 +12,15 @@ import OrdersMade from '../components/OrdersMade.vue'
 const url = window.location.href
 const split = url.split("/")
 const userId = split[split.length - 1]
+let loading = ref(false)
 
 const auth = getAuth();
 let user = ref(auth.currentUser);
 onBeforeMount(() => onAuthStateChanged(auth, (users) => {
     if (users?.uid != userId) {
         window.location.href = '/'
+    } else {
+        loading.value = true
     }
 }))
 
@@ -155,7 +158,7 @@ const confirmEdit = async () => {
 
 <template>
     <Header />
-    <v-main>
+    <v-main v-if="loading">
         <h2 class="d-flex justify-center ma-2">Your Products</h2>
         <v-row class="d-flex justify-center ma-2">
             <v-col v-for="(product, index) in products" cols="3">
