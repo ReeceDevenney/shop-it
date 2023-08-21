@@ -113,25 +113,30 @@ const productNameEdit = ref('')
 const priceEdit = ref<number | null>()
 const descriptionEdit = ref('')
 const activeId = ref()
+const activeIndex = ref(0)
 
-const openDelete = (values: any) => {
+const openDelete = (values: any, index: number) => {
     activeId.value = values.id
     deleteDialog.value = true
+    activeIndex.value = index
+    console.log()
 }
 
 const deleteDocs = async () => {
     await deleteDoc(doc(db, "Products", activeId.value));
+    products.value.splice(activeIndex.value, 1)
     deleteDialog.value = false
 
 }
 
-const openEdit = (values: any) => {
+const openEdit = (values: any, index: number) => {
     activeId.value = values.id
     productNameEdit.value = values.productName
     priceEdit.value = values.price
     descriptionEdit.value = values.description
     editDialog.value = true
-    console.log(activeId.value)
+    activeIndex.value = index
+    console.log(activeIndex.value)
 }
 
 const confirmEdit = async () => {
@@ -150,13 +155,13 @@ const confirmEdit = async () => {
     <v-main>
         <h2 class="d-flex justify-center ma-2">Your Products</h2>
         <v-row class="d-flex justify-center ma-2">
-            <v-col v-for="product in products" cols="3">
+            <v-col v-for="(product, index) in products" cols="3">
                 <v-card>
                     <ProductCard :product="product?.productName" :index="product?.id" :price="product?.price"
                         :image="product?.image" />
                     <div class="d-flex justify-space-around">
                         <v-card-actions>
-                            <v-btn variant="outlined" class="bg-yellow" @click="openEdit(product)">
+                            <v-btn variant="outlined" class="bg-yellow" @click="openEdit(product, index)">
                                 Edit
                             </v-btn>
                             <v-dialog v-model="editDialog" width="400">
@@ -174,7 +179,7 @@ const confirmEdit = async () => {
                             </v-dialog>
                         </v-card-actions>
                         <v-card-actions>
-                            <v-btn variant="outlined" class="bg-red" @click="openDelete(product)">
+                            <v-btn variant="outlined" class="bg-red" @click="openDelete(product, index)">
                                 Delete
                             </v-btn>
                             <v-dialog v-model="deleteDialog" width="auto">
