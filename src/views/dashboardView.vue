@@ -112,13 +112,23 @@ const priceRules = [
     <v-main>
         <h2 class="d-flex justify-center ma-2">Your Products</h2>
         <v-row class="d-flex justify-center ma-2">
-            <v-col v-for="product in products" cols="2">
-                <ProductCard :product="product?.productName" :index="product?.id" :price="product?.price"
-                    :image="product?.image" />
-                <div class="d-flex justify-space-around">
-                    <v-btn class="ma-1 bg-yellow-lighten-2">edit</v-btn>
-                    <v-btn class="ma-1 bg-red-darken-4">delete</v-btn>
-                </div>
+            <v-col v-for="product in products" cols="3">
+                <v-card>
+                    <ProductCard :product="product?.productName" :index="product?.id" :price="product?.price"
+                        :image="product?.image" />
+                    <div class="d-flex justify-space-around">
+                        <v-card-actions>
+                            <v-btn variant="outlined" class="bg-yellow">
+                                Edit
+                            </v-btn>
+                        </v-card-actions>
+                        <v-card-actions>
+                            <v-btn variant="outlined" class="bg-red">
+                                Delete
+                            </v-btn>
+                        </v-card-actions>
+                    </div>
+                </v-card>
             </v-col>
         </v-row>
         <h2 class="d-flex justify-center ma-2">Add A New Product!</h2>

@@ -10,10 +10,12 @@ onBeforeMount(async () => {
     const querySnapshot = await getDocs(collection(db, "Products"));
     let productsTemp: any = []
     querySnapshot.forEach((doc) => {
+        console.log(doc.data())
         const product = {
             id: doc.id,
             productName: doc.data().productName,
             price: doc.data().price,
+            image: doc.data().imageUrl
         }
         productsTemp.push(product)
     })
@@ -26,7 +28,10 @@ onBeforeMount(async () => {
     <v-main>
         <v-row class="d-flex justify-center ma-2">
             <v-col v-for="product in products" cols="2">
-                <ProductCard :product="product?.productName" :index="product?.id" :price="product?.price" />
+                <v-card>
+                    <ProductCard :product="product?.productName" :index="product?.id" :price="product?.price"
+                        :image="product?.image" />
+                </v-card>
             </v-col>
         </v-row>
     </v-main>

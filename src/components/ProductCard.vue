@@ -6,11 +6,9 @@ defineProps(["product", "index", "price", "image"])
 </script>
 
 <template>
-    <v-card>
-        <RouterLink :to="`/product/${index}`">
-            <VImg :src="image"></VImg>
-            <h2>{{ product }}</h2>
-            <p>{{ price }}</p>
-        </RouterLink>
-    </v-card>
+    <RouterLink :to="`/product/${index}`">
+        <VImg :src="image"></VImg>
+        <h2>{{ product }}</h2>
+        <p>{{ price }}</p>
+    </RouterLink>
 </template>
