@@ -50,6 +50,7 @@ const btnPress = async () => {
                 price: cart[i].price,
                 imageUrl: cart[i].imageUrl,
                 productName: cart[i].productName,
+                shipped: false
             });
             if (docRef) {
                 orderSucess.value = true
