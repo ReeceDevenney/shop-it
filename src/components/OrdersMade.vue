@@ -12,7 +12,7 @@ defineProps(["order"])
         </v-col>
         <v-col cols="2">
             <p>${{ order.price }}</p>
-            <p v-if="order.status">Shipped</p>
+            <p v-if="order.shipped">Shipped</p>
             <p v-else>Ordered</p>
         </v-col>
         <v-divider></v-divider>
