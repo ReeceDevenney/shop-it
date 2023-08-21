@@ -6,6 +6,7 @@ import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import db from '../firebaseInit'
 import OrderRecieved from '../components/OrderRecieved.vue'
+import OrdersMade from '../components/OrdersMade.vue'
 
 // gets userId from the URL
 const url = window.location.href
@@ -49,6 +50,7 @@ onMounted(async () => {
             id: doc.id,
             productName: doc.data().productName,
             price: doc.data().price,
+            image: doc.data().imageUrl,
             address: doc.data().address,
             city: doc.data().city,
             state: doc.data().state,
@@ -58,7 +60,23 @@ onMounted(async () => {
         recievedTemp.push(product)
     })
     ordersRecieved.value = recievedTemp
-    console.log(ordersRecieved.value)
+})
+
+let ordersMade: any = ref([])
+onMounted(async () => {
+    const querySnapshot = await getDocs(query(collection(db, "Orders"), where("sellerId", "==", userId)));
+    let madeTemp: any = []
+    querySnapshot.forEach((doc) => {
+        const product = {
+            id: doc.id,
+            productName: doc.data().productName,
+            price: doc.data().price,
+            image: doc.data().imageUrl,
+            shipped: doc.data().shipped,
+        }
+        madeTemp.push(product)
+    })
+    ordersMade.value = madeTemp
 })
 
 let productName = ref('')
@@ -127,18 +145,7 @@ const priceRules = [
         <h2 class="d-flex justify-center">Orders Recieved</h2>
         <OrderRecieved v-for="order in ordersRecieved" :order="order" />
         <h2 class="d-flex justify-center">Orders Placed</h2>
-        <v-row class="d-flex justify-space-between my-2 mx-16 pa-2">
-            <v-col cols="2">
-                <v-img src="https://placehold.co/400x400"></v-img>
-            </v-col>
-            <v-col cols="7" class="mr-16">
-                <p>productName</p>
-            </v-col>
-            <v-col cols="2">
-                <p>$price</p>
-                <p>status</p>
-            </v-col>
-            <v-divider></v-divider>
-        </v-row>
+        <OrdersMade v-for="order in ordersMade" :order="order" />
+        "/>
     </v-main>
 </template>
