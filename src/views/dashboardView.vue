@@ -2,7 +2,7 @@
 import { ref, onBeforeMount, onMounted } from "vue"
 import Header from "../components/Header.vue"
 import ProductCard from "@/components/ProductCard.vue";
-import { collection, addDoc, getDocs, query, where, doc, deleteDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import db from '../firebaseInit'
 import OrderRecieved from '../components/OrderRecieved.vue'
@@ -33,7 +33,8 @@ onMounted(async () => {
             id: doc.id,
             productName: doc.data().productName,
             price: doc.data().price,
-            image: doc.data().imageUrl
+            image: doc.data().imageUrl,
+            description: doc.data().description
         }
         productsTemp.push(product)
     })
@@ -105,13 +106,43 @@ const priceRules = [
     (v: string) => !Number.isNaN(parseInt(v)) || 'this field must be a numbered price',
 ]
 
-const deleteDocs = async (docId: string) => {
-    console.log(docId)
-    await deleteDoc(doc(db, "Products", docId));
-    dialog.value = false
+const deleteDialog = ref(false)
+const editDialog = ref(false)
+
+const productNameEdit = ref('')
+const priceEdit = ref<number | null>()
+const descriptionEdit = ref('')
+const activeId = ref()
+
+const openDelete = (values: any) => {
+    activeId.value = values.id
+    deleteDialog.value = true
+}
+
+const deleteDocs = async () => {
+    await deleteDoc(doc(db, "Products", activeId.value));
+    deleteDialog.value = false
 
 }
-let dialog = ref(false)
+
+const openEdit = (values: any) => {
+    activeId.value = values.id
+    productNameEdit.value = values.productName
+    priceEdit.value = values.price
+    descriptionEdit.value = values.description
+    editDialog.value = true
+    console.log(activeId.value)
+}
+
+const confirmEdit = async () => {
+    await updateDoc(doc(db, "Products", activeId.value), {
+        productName: productNameEdit.value,
+        price: priceEdit.value,
+        description: descriptionEdit.value
+    });
+    editDialog.value = false
+}
+
 </script>
 
 <template>
@@ -125,21 +156,34 @@ let dialog = ref(false)
                         :image="product?.image" />
                     <div class="d-flex justify-space-around">
                         <v-card-actions>
-                            <v-btn variant="outlined" class="bg-yellow">
+                            <v-btn variant="outlined" class="bg-yellow" @click="openEdit(product)">
                                 Edit
                             </v-btn>
+                            <v-dialog v-model="editDialog" width="400">
+                                <v-card>
+                                    <p>{{ product?.id }}</p>
+                                    <v-form class="pa-2">
+                                        <v-text-field label="Product Name" v-model="productNameEdit"></v-text-field>
+                                        <v-text-field label="Description" v-model="descriptionEdit"></v-text-field>
+                                        <v-text-field label="Price" v-model="priceEdit"></v-text-field>
+                                        <v-card-actions>
+                                            <v-btn color="green" block @click="confirmEdit()">Update</v-btn>
+                                        </v-card-actions>
+                                    </v-form>
+                                </v-card>
+                            </v-dialog>
                         </v-card-actions>
                         <v-card-actions>
-                            <v-btn variant="outlined" class="bg-red" @click="dialog = true">
+                            <v-btn variant="outlined" class="bg-red" @click="openDelete(product)">
                                 Delete
                             </v-btn>
-                            <v-dialog v-model="dialog" width="auto">
+                            <v-dialog v-model="deleteDialog" width="auto">
                                 <v-card>
                                     <v-card-text>
                                         are you sure?
                                     </v-card-text>
                                     <v-card-actions>
-                                        <v-btn color="red" block @click="deleteDocs(product?.id)">Yes</v-btn>
+                                        <v-btn color="red" block @click="deleteDocs()">Yes</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
