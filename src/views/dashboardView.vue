@@ -5,6 +5,7 @@ import ProductCard from "@/components/ProductCard.vue";
 import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import db from '../firebaseInit'
+import OrderRecieved from '../components/OrderRecieved.vue'
 
 // gets userId from the URL
 const url = window.location.href
@@ -31,10 +32,33 @@ onMounted(async () => {
             id: doc.id,
             productName: doc.data().productName,
             price: doc.data().price,
+            image: doc.data().imageUrl
         }
         productsTemp.push(product)
     })
     products.value = productsTemp
+})
+
+// pulls any orders for the users product
+let ordersRecieved: any = ref([])
+onMounted(async () => {
+    const querySnapshot = await getDocs(query(collection(db, "Orders"), where("sellerId", "==", userId)));
+    let recievedTemp: any = []
+    querySnapshot.forEach((doc) => {
+        const product = {
+            id: doc.id,
+            productName: doc.data().productName,
+            price: doc.data().price,
+            address: doc.data().address,
+            city: doc.data().city,
+            state: doc.data().state,
+            zip: doc.data().zip,
+            shipped: doc.data().shipped,
+        }
+        recievedTemp.push(product)
+    })
+    ordersRecieved.value = recievedTemp
+    console.log(ordersRecieved.value)
 })
 
 let productName = ref('')
@@ -71,7 +95,8 @@ const priceRules = [
         <h2 class="d-flex justify-center ma-2">Your Products</h2>
         <v-row class="d-flex justify-center ma-2">
             <v-col v-for="product in products" cols="2">
-                <ProductCard :product="product?.productName" :index="product?.id" :price="product?.price" />
+                <ProductCard :product="product?.productName" :index="product?.id" :price="product?.price"
+                    :image="product?.image" />
                 <div class="d-flex justify-space-around">
                     <v-btn class="ma-1 bg-yellow-lighten-2">edit</v-btn>
                     <v-btn class="ma-1 bg-red-darken-4">delete</v-btn>
@@ -99,5 +124,21 @@ const priceRules = [
                 <v-btn class="bg-green" @click="addProduct">Add Product</v-btn>
             </v-container>
         </v-form>
+        <h2 class="d-flex justify-center">Orders Recieved</h2>
+        <OrderRecieved v-for="order in ordersRecieved" :order="order" />
+        <h2 class="d-flex justify-center">Orders Placed</h2>
+        <v-row class="d-flex justify-space-between my-2 mx-16 pa-2">
+            <v-col cols="2">
+                <v-img src="https://placehold.co/400x400"></v-img>
+            </v-col>
+            <v-col cols="7" class="mr-16">
+                <p>productName</p>
+            </v-col>
+            <v-col cols="2">
+                <p>$price</p>
+                <p>status</p>
+            </v-col>
+            <v-divider></v-divider>
+        </v-row>
     </v-main>
 </template>

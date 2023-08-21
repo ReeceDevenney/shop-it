@@ -88,7 +88,7 @@ const btnPress = async () => {
         <div v-else class="d-flex justify-center flex-column">
             <p class="d-flex justify-center">Order Sucess!</p>
             <RouterLink to="/" class="d-flex justify-center">
-                <v-btn class="ma-auto bg-green-darken-1" @click="btnPress">Return Home</v-btn>
+                <v-btn class="ma-auto bg-green-darken-1">Return Home</v-btn>
             </RouterLink>
         </div>
     </v-main>
