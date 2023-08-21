@@ -2,7 +2,7 @@
 import { ref, onBeforeMount, onMounted } from "vue"
 import Header from "../components/Header.vue"
 import ProductCard from "@/components/ProductCard.vue";
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, doc, deleteDoc } from "firebase/firestore";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import db from '../firebaseInit'
 import OrderRecieved from '../components/OrderRecieved.vue'
@@ -105,6 +105,13 @@ const priceRules = [
     (v: string) => !Number.isNaN(parseInt(v)) || 'this field must be a numbered price',
 ]
 
+const deleteDocs = async (docId: string) => {
+    console.log(docId)
+    await deleteDoc(doc(db, "Products", docId));
+    dialog.value = false
+
+}
+let dialog = ref(false)
 </script>
 
 <template>
@@ -123,9 +130,19 @@ const priceRules = [
                             </v-btn>
                         </v-card-actions>
                         <v-card-actions>
-                            <v-btn variant="outlined" class="bg-red">
+                            <v-btn variant="outlined" class="bg-red" @click="dialog = true">
                                 Delete
                             </v-btn>
+                            <v-dialog v-model="dialog" width="auto">
+                                <v-card>
+                                    <v-card-text>
+                                        are you sure?
+                                    </v-card-text>
+                                    <v-card-actions>
+                                        <v-btn color="red" block @click="deleteDocs(product?.id)">Yes</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
                         </v-card-actions>
                     </div>
                 </v-card>
