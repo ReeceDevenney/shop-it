@@ -2,6 +2,8 @@
 import { RouterLink } from 'vue-router'
 import { ref, onBeforeMount } from 'vue'
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import db from '../firebaseInit'
 
 const auth = getAuth();
 let user = ref(auth.currentUser);
@@ -34,6 +36,19 @@ const logout = async () => {
 
 }
 
+const searchInput = ref("")
+const searchBar = async (event: Event) => {
+    event.preventDefault()
+    console.log(searchInput)
+    const querySnapshot = await getDocs(query(collection(db, "Products"), where("productName", "==", searchInput.value)));
+    if (querySnapshot) {
+        querySnapshot.forEach((doc) => {
+            window.location.href = `product/${doc.id}`
+        });
+
+    }
+}
+
 </script>
 
 <template>
@@ -46,7 +61,11 @@ const logout = async () => {
                 </RouterLink>
             </v-col>
             <v-col cols="6" class="d-flex align-center ma-8">
-                <input type="text" id="searchbar" class="pl-2 w-100 rounded" placeholder="search" autofocus>
+                <form @submit="searchBar($event)" class="pl-2 w-100 rounded">
+                    <input type="text" id="searchbar" class="pl-2 w-100 rounded" placeholder="search" v-model="searchInput"
+                        autofocus>
+                </form>
+
             </v-col>
             <v-col v-if="user" cols="2" class="d-flex justify-center">
                 <v-btn class="ml-10">

@@ -44,7 +44,7 @@ onMounted(async () => {
 // pulls any orders for the users product
 let ordersRecieved: any = ref([])
 onMounted(async () => {
-    const querySnapshot = await getDocs(query(collection(db, "Orders"), where("sellerId", "==", userId)));
+    const querySnapshot = await getDocs(query(collection(db, "Orders"), where("sellerId", "==", userId), where("shipped", "==", false)));
     let recievedTemp: any = []
     querySnapshot.forEach((doc) => {
         const product = {
@@ -62,7 +62,7 @@ onMounted(async () => {
     })
     ordersRecieved.value = recievedTemp
 })
-
+// pulls any orders the user has made for other products
 let ordersMade: any = ref([])
 onMounted(async () => {
     const querySnapshot = await getDocs(query(collection(db, "Orders"), where("sellerId", "==", userId)));
@@ -225,6 +225,5 @@ const confirmEdit = async () => {
         <OrderRecieved v-for="order in ordersRecieved" :order="order" />
         <h2 class="d-flex justify-center">Orders Placed</h2>
         <OrdersMade v-for="order in ordersMade" :order="order" />
-        "/>
     </v-main>
 </template>
