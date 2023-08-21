@@ -136,7 +136,7 @@ const openEdit = (values: any, index: number) => {
     descriptionEdit.value = values.description
     editDialog.value = true
     activeIndex.value = index
-    console.log(activeIndex.value)
+    console.log(products.value[activeIndex.value].description)
 }
 
 const confirmEdit = async () => {
@@ -145,6 +145,9 @@ const confirmEdit = async () => {
         price: priceEdit.value,
         description: descriptionEdit.value
     });
+    products.value[activeIndex.value].productName = productNameEdit.value
+    products.value[activeIndex.value].price = priceEdit.value
+    products.value[activeIndex.value].description = descriptionEdit.value
     editDialog.value = false
 }
 
