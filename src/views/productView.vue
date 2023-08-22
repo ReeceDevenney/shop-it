@@ -3,10 +3,20 @@ import Header from "../components/Header.vue"
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebaseInit"
 import { ref, onBeforeMount } from "vue"
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 
 const url = window.location.href
 const split = url.split("/")
 const productId = split[split.length - 1]
+
+const auth = getAuth();
+let user = ref(auth.currentUser);
+
+onBeforeMount(() => onAuthStateChanged(auth, (users) => {
+    if (users) {
+        user.value = users
+    }
+}))
 
 let loading = ref(true)
 
@@ -51,7 +61,8 @@ const addToCart = () => {
                 <h2 class="mb-5">{{ product.productName }}</h2>
                 <p class="mb-5">{{ product.description }}</p>
                 <p class="mb-5">${{ product.price }}</p>
-                <v-btn @click="addToCart">add to cart</v-btn>
+                <v-btn v-if="user" @click="addToCart">add to cart</v-btn>
+                <p v-else>Login to purchase</p>
             </v-col>
         </v-row>
     </v-main>
