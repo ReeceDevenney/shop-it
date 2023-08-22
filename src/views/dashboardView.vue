@@ -93,6 +93,11 @@ interface fileTypeInt {
     type: string
 }
 
+const cleanPrice = () => {
+    if (price.value) {
+        price.value = parseFloat((Math.round(price.value * 100) / 100).toFixed(2))
+    }
+}
 // lets a user post a new product
 const addProduct = async (fileType: fileTypeInt) => {
     console.log(fileType, "tuype")
@@ -104,6 +109,7 @@ const addProduct = async (fileType: fileTypeInt) => {
         alert("please only upload .png and .jpeg")
         return
     }
+    cleanPrice()
     const imageRef = firebaseRef(storage, `images/${Date.now()}`)
     const snapShot = await uploadBytes(imageRef, uploadImg.value.value)
     const imageURL = await getDownloadURL(snapShot.ref)
@@ -239,6 +245,7 @@ const confirmEdit = async () => {
                             required></v-text-field>
                     </v-col>
                     <v-col>
+                        <!-- @vue-ignore -->
                         <input class="mb-2" type="file" accept="'*.jpg, *.png'" ref="test" id="inputForm"
                             @change="($event) => { uploadImg.value = $event.target?.files[0] }" />
                     </v-col>

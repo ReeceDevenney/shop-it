@@ -11,13 +11,6 @@ let user = ref(auth.currentUser);
 onBeforeMount(() => onAuthStateChanged(auth, (users) => {
     if (users) {
         user.value = users
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
-        const uid = users.uid;
-        // ...
-    } else {
-        // User is signed out
-        // ...
     }
 }))
 
@@ -65,7 +58,6 @@ const searchBar = async (event: Event) => {
                     <input type="text" id="searchbar" class="pl-2 w-100 rounded" placeholder="search" v-model="searchInput"
                         autofocus>
                 </form>
-
             </v-col>
             <v-col v-if="user" cols="2" class="d-flex justify-center">
                 <v-btn class="ml-10">

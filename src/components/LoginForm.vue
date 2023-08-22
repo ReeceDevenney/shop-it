@@ -36,14 +36,16 @@ const login = (event: Event) => {
 </script>
 
 <template>
-    <div class="d-flex justify-center mb-2">
-        <input placeholder="Email" class="w-75 rounded" v-model="email">
-    </div>
-    <div class="d-flex justify-center flex-column align-center mb-2">
-        <input placeholder="Password" class="w-75 rounded" type="password" v-model="password">
-        <p v-if="badLogin">incorrect username or password</p>
-    </div>
-    <div class="d-flex justify-center">
-        <v-btn class="ma-auto" color="grey" @click="login">Login</v-btn>
-    </div>
+    <form>
+        <div class="d-flex justify-center mb-2">
+            <input placeholder="Email" class="w-75 rounded" v-model="email">
+        </div>
+        <div class="d-flex justify-center flex-column align-center mb-2">
+            <input placeholder="Password" class="w-75 rounded" type="password" v-model="password">
+            <p v-if="badLogin">incorrect username or password</p>
+        </div>
+        <div class="d-flex justify-center">
+            <v-btn class="ma-auto" color="grey" @click="login">Login</v-btn>
+        </div>
+    </form>
 </template>
