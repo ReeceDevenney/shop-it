@@ -37,6 +37,10 @@ if (cartStorage != null) {
 
 let orderSucess = ref(false)
 const btnPress = async () => {
+    if (city.value === "", state.value === "", address.value === "", zip.value === "") {
+        alert("please make sure all fields are filled out")
+        return
+    }
     if (cart) {
         for (let i = 0; i < cart?.length; i++) {
             const docRef = await addDoc(collection(db, "Orders"), {
