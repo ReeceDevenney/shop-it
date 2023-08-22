@@ -89,9 +89,18 @@ onMounted(async () => {
     ordersMade.value = madeTemp
 })
 
+interface fileTypeInt {
+    type: string
+}
+
 // lets a user post a new product
-const addProduct = async (fileType: string) => {
-    if (fileType != "image/png" && fileType != "image/jpeg") {
+const addProduct = async (fileType: fileTypeInt) => {
+    console.log(fileType, "tuype")
+    if (productName.value === "" || price.value === null || description.value === "" || fileType === undefined) {
+        alert("please make sure all fields are filled out")
+        return
+    }
+    if (fileType.type != "image/png" && fileType.type != "image/jpeg") {
         alert("please only upload .png and .jpeg")
         return
     }
@@ -118,6 +127,8 @@ const priceRules = [
     (v: string) => !Number.isNaN(parseInt(v)) || 'this field must be a numbered price',
 ]
 
+
+//controlls for opening the models for updating and deleting products
 const deleteDialog = ref(false)
 const editDialog = ref(false)
 
@@ -185,7 +196,7 @@ const confirmEdit = async () => {
                                     <v-form class="pa-2">
                                         <v-text-field label="Product Name" v-model="productNameEdit"></v-text-field>
                                         <v-text-field label="Description" v-model="descriptionEdit"></v-text-field>
-                                        <v-text-field label="Price" v-model="priceEdit"></v-text-field>
+                                        <v-text-field label="Price" type="number" v-model="priceEdit"></v-text-field>
                                         <v-card-actions>
                                             <v-btn color="green" block @click="confirmEdit()">Update</v-btn>
                                         </v-card-actions>
@@ -232,7 +243,7 @@ const confirmEdit = async () => {
                             @change="($event) => { uploadImg.value = $event.target?.files[0] }" />
                     </v-col>
                 </v-row>
-                <v-btn class="bg-green" @click="addProduct(uploadImg.value.type, $event)">Add Product</v-btn>
+                <v-btn class="bg-green" @click="addProduct(uploadImg.value)">Add Product</v-btn>
             </v-container>
         </v-form>
         <h2 class="d-flex justify-center">Orders Recieved</h2>
