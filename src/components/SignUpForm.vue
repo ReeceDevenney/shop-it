@@ -8,6 +8,10 @@ const email = ref('')
 
 const auth = getAuth();
 const signUp = async () => {
+    if (email.value === "" || password.value === "" || email.value === "") {
+        alert("please fill out all fields to signup")
+        return
+    }
     await createUserWithEmailAndPassword(auth, email.value, password.value)
         .then((userCredential) => {
             // Signed in 
@@ -30,6 +34,16 @@ const signUp = async () => {
     }
 
 }
+
+
+const badPassword = ref(false)
+const passwordStr = () => {
+    if (password.value.length > 0 && password.value.length < 6) {
+        badPassword.value = true
+    } else {
+        badPassword.value = false
+    }
+}
 </script>
 
 <template>
@@ -39,8 +53,9 @@ const signUp = async () => {
     <div class="d-flex justify-center mb-2">
         <input placeholder="Email" class="w-75 rounded" v-model="email">
     </div>
-    <div class="d-flex justify-center mb-2">
-        <input placeholder="Password" class="w-75 rounded" v-model="password">
+    <div class="d-flex justify-center flex-column align-center mb-2">
+        <input placeholder="Password" class="w-75 rounded" type="password" v-model="password" @change="passwordStr">
+        <p v-if="badPassword" class="yellow--text">Passwords must be at least 6 characters long</p>
     </div>
     <div class="d-flex justify-center">
         <v-btn class="ma-auto" color="grey" @click="signUp()">Sign Up</v-btn>
