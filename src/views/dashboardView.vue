@@ -90,7 +90,7 @@ onMounted(async () => {
 })
 
 // lets a user post a new product
-const addProduct = async (fileType: string, event: Event) => {
+const addProduct = async (fileType: string) => {
     if (fileType != "image/png" && fileType != "image/jpeg") {
         alert("please only upload .png and .jpeg")
         return

@@ -79,7 +79,7 @@ const btnPress = async () => {
                 <input placeholder="Address" class="w-25 rounded" v-model="address">
             </div>
             <div class="d-flex justify-center mb-2">
-                <input placeholder="Zip-Code" class="w-25 rounded" v-model="zip">
+                <input placeholder="Zip-Code" class="w-25 rounded" v-model="zip" type="number">
             </div>
             <div class="d-flex justify-center">
                 <v-btn class="ma-auto bg-green-darken-1" @click="btnPress">Checkout</v-btn>
