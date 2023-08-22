@@ -89,17 +89,12 @@ onMounted(async () => {
     ordersMade.value = madeTemp
 })
 
-const uploadImage = () => {
-    const imageRef = firebaseRef(storage, 'images/test')
-    uploadBytes(imageRef, uploadImg.value.value).then((snapShot) => {
-        getDownloadURL(snapShot.ref).then((url) => {
-            console.log(url)
-        })
-    })
-}
-
 // lets a user post a new product
-const addProduct = async () => {
+const addProduct = async (fileType: string, event: Event) => {
+    if (fileType != "image/png" && fileType != "image/jpeg") {
+        alert("please only upload .png and .jpeg")
+        return
+    }
     const imageRef = firebaseRef(storage, `images/${Date.now()}`)
     const snapShot = await uploadBytes(imageRef, uploadImg.value.value)
     const imageURL = await getDownloadURL(snapShot.ref)
@@ -113,9 +108,10 @@ const addProduct = async () => {
     console.log("Document written with ID: ", docRef.id);
 
     productName.value = ''
-    imageUrl.value = ''
     description.value = ''
     price.value = null
+    // @ts-ignore
+    document.getElementById("inputForm").value = ""
 }
 
 const priceRules = [
@@ -225,18 +221,18 @@ const confirmEdit = async () => {
                     </v-col>
 
                     <v-col>
-                        <v-text-field label="Image URL" v-model="imageUrl" required></v-text-field>
+                        <v-text-field label="Description" v-model="description" required></v-text-field>
                     </v-col>
                     <v-col>
                         <v-text-field label="Price" type="number" v-model="price" :rules="priceRules"
                             required></v-text-field>
                     </v-col>
                     <v-col>
-                        <input type="file" @change="($event) => { uploadImg.value = $event.target?.files[0] }" />
-                        <v-btn @click="uploadImage">test image</v-btn>
+                        <input class="mb-2" type="file" accept="'*.jpg, *.png'" ref="test" id="inputForm"
+                            @change="($event) => { uploadImg.value = $event.target?.files[0] }" />
                     </v-col>
                 </v-row>
-                <v-btn class="bg-green" @click="addProduct">Add Product</v-btn>
+                <v-btn class="bg-green" @click="addProduct(uploadImg.value.type, $event)">Add Product</v-btn>
             </v-container>
         </v-form>
         <h2 class="d-flex justify-center">Orders Recieved</h2>
