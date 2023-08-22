@@ -2,7 +2,7 @@
 import Header from "../components/Header.vue"
 import { ref, onBeforeMount } from 'vue'
 import { collection, addDoc } from "firebase/firestore";
-import db from "../firebaseInit"
+import { db } from "../firebaseInit"
 import { RouterLink } from 'vue-router'
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 

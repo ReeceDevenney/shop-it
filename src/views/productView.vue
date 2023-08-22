@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Header from "../components/Header.vue"
 import { doc, getDoc } from "firebase/firestore";
-import db from "../firebaseInit"
+import { db } from "../firebaseInit"
 import { ref, onBeforeMount } from "vue"
 
 const url = window.location.href
@@ -12,7 +12,8 @@ let loading = ref(true)
 
 const product = ref()
 const docRef = doc(db, "Products", productId);
-const getProduct = async (product: any) => {
+// @ts-ignore
+const getProduct = async (product) => {
     let docSnap = await getDoc(docRef);
     product.value = docSnap.data()
     product.value.productId = productId
@@ -26,6 +27,7 @@ const addToCart = () => {
     if (localStorage.getItem("cart") === null) {
         localStorage.setItem("cart", JSON.stringify([product.value]))
     } else {
+        // @ts-ignore
         let holder = JSON.parse(localStorage.getItem("cart"))
         holder.push(product.value)
         localStorage.setItem("cart", JSON.stringify(holder))

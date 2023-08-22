@@ -7,7 +7,7 @@ import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import { db, storage } from '../firebaseInit'
 import OrderRecieved from '../components/OrderRecieved.vue'
 import OrdersMade from '../components/OrdersMade.vue'
-import { ref as firebaseRef, uploadBytes } from "firebase/storage"
+import { ref as firebaseRef, uploadBytes, getDownloadURL } from "firebase/storage"
 
 // gets userId from the URL
 const url = window.location.href
@@ -15,8 +15,13 @@ const split = url.split("/")
 const userId = split[split.length - 1]
 let loading = ref(false)
 
+const productName = ref('')
+const imageUrl = ref('')
+const price = ref<number | null>()
+const description = ref('')
+const uploadImg: any = ref<any>({})
+
 const auth = getAuth();
-let user = ref(auth.currentUser);
 onBeforeMount(() => onAuthStateChanged(auth, (users) => {
     if (users?.uid != userId) {
         window.location.href = '/'
@@ -84,25 +89,24 @@ onMounted(async () => {
     ordersMade.value = madeTemp
 })
 
-const productName = ref('')
-const imageUrl = ref('')
-const price = ref<number | null>()
-const description = ref('')
-const uploadImg: any = ref()
-
 const uploadImage = () => {
     const imageRef = firebaseRef(storage, 'images/test')
-    uploadBytes(imageRef, uploadImg).then(() => {
-        alert("image uploaded")
+    uploadBytes(imageRef, uploadImg.value.value).then((snapShot) => {
+        getDownloadURL(snapShot.ref).then((url) => {
+            console.log(url)
+        })
     })
 }
 
 // lets a user post a new product
 const addProduct = async () => {
+    const imageRef = firebaseRef(storage, `images/${Date.now()}`)
+    const snapShot = await uploadBytes(imageRef, uploadImg.value.value)
+    const imageURL = await getDownloadURL(snapShot.ref)
     const docRef = await addDoc(collection(db, "Products"), {
         postedBy: userId,
         productName: productName.value,
-        imageUrl: imageUrl.value,
+        imageUrl: imageURL,
         price: price.value,
         description: description.value
     });
@@ -224,13 +228,13 @@ const confirmEdit = async () => {
                         <v-text-field label="Image URL" v-model="imageUrl" required></v-text-field>
                     </v-col>
                     <v-col>
-                        <v-text-field label="Price" v-model="price" :rules="priceRules" required></v-text-field>
+                        <v-text-field label="Price" type="number" v-model="price" :rules="priceRules"
+                            required></v-text-field>
                     </v-col>
                     <v-col>
-                        <input type="file" />
+                        <input type="file" @change="($event) => { uploadImg.value = $event.target?.files[0] }" />
                         <v-btn @click="uploadImage">test image</v-btn>
                     </v-col>
-
                 </v-row>
                 <v-btn class="bg-green" @click="addProduct">Add Product</v-btn>
             </v-container>
