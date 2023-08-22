@@ -86,12 +86,12 @@ const searchBar = async (event: Event) => {
                     </v-menu>
                 </v-btn>
             </v-col>
-            <v-col v-else cols="2" class="d-flex justify-center">
+            <v-col v-else cols="3" class="d-flex justify-center">
                 <RouterLink to="/Login" class="ma-2 pa-2">
                     <v-btn color="black">Login</v-btn>
                 </RouterLink>
             </v-col>
-            <v-col cols="" class="d-flex justify-center">
+            <v-col v-if="user" cols="" class="d-flex justify-center">
                 <RouterLink to="/cart" class="ma-2 pa-2 rounded-shaped">
                     <v-sheet class="ma-2 pa-2">
                         <v-btn color="black">Cart</v-btn>
