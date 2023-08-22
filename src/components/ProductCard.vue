@@ -9,6 +9,6 @@ defineProps(["product", "index", "price", "image"])
     <RouterLink :to="`/product/${index}`">
         <VImg :src="image" class="resize"></VImg>
         <h2>{{ product }}</h2>
-        <p>{{ price }}</p>
+        <p>${{ price }}</p>
     </RouterLink>
 </template>
