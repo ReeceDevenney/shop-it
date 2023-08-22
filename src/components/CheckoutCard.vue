@@ -5,7 +5,7 @@ defineProps(["imageUrl", "productName", "price", "keys"])
 <template>
     <v-row class="d-flex justify-space-between my-2 mx-16 pa-2">
         <v-col cols="2">
-            <v-img :src="imageUrl"></v-img>
+            <v-img :src="imageUrl" class="resize"></v-img>
         </v-col>
         <v-col cols="7" class="mr-16">
             <p>{{ productName }}</p>

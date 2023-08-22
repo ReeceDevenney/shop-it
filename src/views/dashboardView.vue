@@ -4,9 +4,10 @@ import Header from "../components/Header.vue"
 import ProductCard from "@/components/ProductCard.vue";
 import { collection, addDoc, getDocs, query, where, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
-import db from '../firebaseInit'
+import { db, storage } from '../firebaseInit'
 import OrderRecieved from '../components/OrderRecieved.vue'
 import OrdersMade from '../components/OrdersMade.vue'
+import { ref as firebaseRef, uploadBytes } from "firebase/storage"
 
 // gets userId from the URL
 const url = window.location.href
@@ -68,7 +69,7 @@ onMounted(async () => {
 // pulls any orders the user has made for other products
 let ordersMade: any = ref([])
 onMounted(async () => {
-    const querySnapshot = await getDocs(query(collection(db, "Orders"), where("sellerId", "==", userId)));
+    const querySnapshot = await getDocs(query(collection(db, "Orders"), where("buyerId", "==", userId)));
     let madeTemp: any = []
     querySnapshot.forEach((doc) => {
         const product = {
@@ -83,10 +84,18 @@ onMounted(async () => {
     ordersMade.value = madeTemp
 })
 
-let productName = ref('')
-let imageUrl = ref('')
-let price = ref<number | null>()
-let description = ref('')
+const productName = ref('')
+const imageUrl = ref('')
+const price = ref<number | null>()
+const description = ref('')
+const uploadImg: any = ref()
+
+const uploadImage = () => {
+    const imageRef = firebaseRef(storage, 'images/test')
+    uploadBytes(imageRef, uploadImg).then(() => {
+        alert("image uploaded")
+    })
+}
 
 // lets a user post a new product
 const addProduct = async () => {
@@ -215,11 +224,13 @@ const confirmEdit = async () => {
                         <v-text-field label="Image URL" v-model="imageUrl" required></v-text-field>
                     </v-col>
                     <v-col>
-                        <v-text-field label="description" v-model="description" required></v-text-field>
-                    </v-col>
-                    <v-col>
                         <v-text-field label="Price" v-model="price" :rules="priceRules" required></v-text-field>
                     </v-col>
+                    <v-col>
+                        <input type="file" />
+                        <v-btn @click="uploadImage">test image</v-btn>
+                    </v-col>
+
                 </v-row>
                 <v-btn class="bg-green" @click="addProduct">Add Product</v-btn>
             </v-container>

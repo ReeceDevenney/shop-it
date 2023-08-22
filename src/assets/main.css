@@ -6,3 +6,9 @@ body {
   font-family: 'Playfair Display', serif;
   font-family: 'Roboto', sans-serif;
 }
+
+.resize {
+  height: 300px;
+  width: 400px;
+  object-fit: fill
+}

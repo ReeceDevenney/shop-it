@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ProductCard from "../components/ProductCard.vue"
 import Header from "../components/Header.vue"
-import db from "../firebaseInit"
+import { db } from "../firebaseInit"
 import { doc, getDoc, getDocs, collection } from 'firebase/firestore'
 import { onBeforeMount, ref } from 'vue';
 

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 defineProps(["order"])
 import { doc, updateDoc } from "firebase/firestore";
-import db from '../firebaseInit'
+import { db } from '../firebaseInit'
 
 const confirmEdit = async (id: string) => {
     console.log(id)
@@ -17,7 +17,7 @@ const confirmDialog = ref(false)
 <template>
     <v-row class="d-flex justify-space-between my-2 mx-16 pa-2">
         <v-col cols="2">
-            <v-img :src="order.image"></v-img>
+            <v-img :src="order.image" class="resize"></v-img>
         </v-col>
         <v-col cols="7" class="mr-16">
             <p>{{ order.productName }}</p>

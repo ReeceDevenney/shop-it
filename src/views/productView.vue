@@ -42,7 +42,7 @@ const addToCart = () => {
     <v-main v-else>
         <v-row>
             <v-col cols="3" class="ma-10">
-                <VImg :src=product.imageUrl>
+                <VImg :src="product.imageUrl" class="resize">
                 </VImg>
             </v-col>
             <v-col cols="5" class="ma-10">

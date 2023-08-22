@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-router'
 import { ref, onBeforeMount } from 'vue'
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import db from '../firebaseInit'
+import { db } from '../firebaseInit'
 
 const auth = getAuth();
 let user = ref(auth.currentUser);
