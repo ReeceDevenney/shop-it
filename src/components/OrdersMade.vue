@@ -7,7 +7,7 @@ defineProps(["order"])
         <v-col cols="2">
             <v-img :src="order.image" class="resize"></v-img>
         </v-col>
-        <v-col cols="7" class="mr-16">
+        <v-col cols="2" sm="4" md="7" class="mr-16">
             <p>{{ order.productName }}</p>
         </v-col>
         <v-col cols="2">

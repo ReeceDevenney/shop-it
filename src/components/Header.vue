@@ -47,19 +47,19 @@ const searchBar = async (event: Event) => {
 <template>
     <v-app-bar>
         <v-row no-gutters class="d-flex align-center">
-            <v-col class="d-flex justify-center">
+            <v-col class="d-flex justify-center" md="1">
                 <RouterLink to="/" class="ma-2 pa-2 rounded-shaped"
                     style="text-decoration: none; color: inherit; background-color: green;">
                     Shop-It!
                 </RouterLink>
             </v-col>
-            <v-col cols="6" class="d-flex align-center ma-8">
+            <v-col xs="3" sm="3" md="6" class="d-flex align-center ma-0 ma-xs-0">
                 <form @submit="searchBar($event)" class="pl-2 w-100 rounded">
                     <input type="text" id="searchbar" class="pl-2 w-100 rounded" placeholder="search" v-model="searchInput"
                         autofocus>
                 </form>
             </v-col>
-            <v-col v-if="user" cols="2" class="d-flex justify-center">
+            <v-col v-if="user" cols="2" xs="1" class="d-flex justify-center">
                 <v-btn class="ml-10">
                     {{ user?.displayName }}
                     <v-menu activator="parent">
