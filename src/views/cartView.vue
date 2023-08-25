@@ -28,7 +28,7 @@ const removeFromCart = (index: number) => {
             <CheckoutCard @remove="removeFromCart(index)" v-for="(item, index) in cart" :imageUrl="item.imageUrl"
                 :productName="item.productName" :price="item.price" />
             <v-row class="d-flex justify-space-between my-2 mx-16 pa-2">
-                <v-col cols="9">
+                <v-col cols="2" sm="4" md="7">
                     <v-img></v-img>
                 </v-col>
                 <v-col cols="2">
