@@ -187,7 +187,7 @@ const confirmEdit = async () => {
     <v-main v-if="loading">
         <h2 class="d-flex justify-center ma-2">Your Products</h2>
         <v-row class="d-flex justify-center ma-2">
-            <v-col v-for="(product, index) in products" cols="3">
+            <v-col v-for="(product, index) in products" cols="12" sm="3">
                 <v-card>
                     <ProductCard :product="product?.productName" :index="product?.id" :price="product?.price"
                         :image="product?.image" />

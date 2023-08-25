@@ -11,7 +11,7 @@ interface productShape {
     image: string,
 }
 
-let products: Array<productShape> = ref([])
+let products: any = ref([])
 onBeforeMount(async () => {
     const querySnapshot = await getDocs(collection(db, "Products"));
     let productsTemp: any = []
