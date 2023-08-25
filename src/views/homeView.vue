@@ -6,7 +6,7 @@ import { doc, getDoc, getDocs, collection } from 'firebase/firestore'
 import { onBeforeMount, ref } from 'vue';
 
 
-interface productShape = {
+interface productShape {
     productName: string,
     image: string,
 }
