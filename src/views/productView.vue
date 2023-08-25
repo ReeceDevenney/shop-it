@@ -52,8 +52,8 @@ const addToCart = () => {
         <div>loading...</div>
     </v-main>
     <v-main v-else>
-        <v-row>
-            <v-col cols="3" class="ma-10">
+        <v-row class="">
+            <v-col cols="8" sm="4" class="ma-0 ma-sm-10">
                 <VImg :src="product.imageUrl" class="resize">
                 </VImg>
             </v-col>
