@@ -5,7 +5,13 @@ import { db } from "../firebaseInit"
 import { doc, getDoc, getDocs, collection } from 'firebase/firestore'
 import { onBeforeMount, ref } from 'vue';
 
-let products: any = ref([])
+
+interface productShape {
+    productName: string,
+    image: string,
+}
+
+let products: Array<productShape> = ref([])
 onBeforeMount(async () => {
     const querySnapshot = await getDocs(collection(db, "Products"));
     let productsTemp: any = []
