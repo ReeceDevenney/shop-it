@@ -4,10 +4,10 @@ defineProps(["order"])
 
 <template>
     <v-row class="d-flex justify-space-between my-2 mx-16 pa-2">
-        <v-col cols="2">
+        <v-col cols="3" xs="2">
             <v-img :src="order.image" class="resize"></v-img>
         </v-col>
-        <v-col cols="2" sm="4" md="7" class="mr-16">
+        <v-col cols="2" sm="4" md="6" class="mr-16">
             <p>{{ order.productName }}</p>
         </v-col>
         <v-col cols="2">
